@@ -149,5 +149,5 @@ ${resuelvo.map((t, i) => `${i + 1}. ${t}`).join('\n')}
 Anótese, notifíquese y archívese.
 
 ${jp}
-Jefe Provincial · ${sol.oficina}`;
+Jefe Provincial${sol.resolucion && sol.resolucion.subrogaA ? ` (S), por ausencia de ${usuario(sol.resolucion.subrogaA).nombre}` : ''} · ${sol.oficina}`;
 }

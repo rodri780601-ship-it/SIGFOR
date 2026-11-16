@@ -631,5 +631,5 @@ function tabResolucion(el, sol) {
 /* ---------- Historial ---------- */
 function tabHistorial(el, sol) {
   const h = sol.historial.slice().sort((a, b) => b.fecha.localeCompare(a.fecha));
-  el.innerHTML = `<ol class="timeline">${h.map(x => `<li><span class="tl-d">${fmtFechaHora(x.fecha)}</span> <b>${esc(x.accion)}</b> <span class="muted small">${esc(usuario(x.usuario).nombre)} · ${esc(ROLES[x.rol] || x.rol)}</span>${x.detalle ? `<div class="small">${esc(x.detalle)}</div>` : ''}</li>`).join('')}</ol>`;
+  el.innerHTML = `<ol class="timeline">${h.map(x => `<li><span class="tl-d">${fmtFechaHora(x.fecha)}</span> <b>${esc(x.accion)}</b> <span class="muted small">${esc(usuario(x.usuario).nombre)} · ${esc(ROLES[x.rol] || x.rol)}${x.subrogaA ? ` (S), subrogando a ${esc(usuario(x.subrogaA).nombre)}` : ''}</span>${x.detalle ? `<div class="small">${esc(x.detalle)}</div>` : ''}</li>`).join('')}</ol>`;
 }

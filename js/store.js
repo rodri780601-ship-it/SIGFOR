@@ -43,7 +43,7 @@ function iniciarSesion(u, c) {
   if (x) setUsuario(x.id);
   return x || null;
 }
-function cerrarSesion() { USUARIO = null; try { localStorage.removeItem(USER_KEY); } catch (e) { /* */ } }
+function cerrarSesion() { USUARIO = null; USUARIO_BASE = null; limpiarModoSubrogante(); try { localStorage.removeItem(USER_KEY); } catch (e) { /* */ } }
 function setUsuario(id) { USUARIO = usuario(id); try { localStorage.setItem(USER_KEY, id); } catch (e) { /* */ } }
 function usuarioGuardado() { try { return localStorage.getItem(USER_KEY); } catch (e) { return null; } }
 
@@ -51,7 +51,7 @@ const solicitud = id => DB.solicitudes.find(s => s.id === id);
 const predio = id => DB.predios.find(p => p.id === id);
 
 function registrar(sol, accion, detalle = '') {
-  sol.historial.push({ fecha: new Date().toISOString(), usuario: USUARIO.id, rol: USUARIO.rol, accion, detalle });
+  sol.historial.push({ fecha: new Date().toISOString(), usuario: USUARIO.id, rol: USUARIO.rol, accion, detalle, ...(USUARIO.subrogaA ? { subrogaA: USUARIO.subrogaA } : {}) });
 }
 
 /* ---------- Plazos ---------- */
@@ -225,7 +225,7 @@ function firmarResolucion(sol) {
   DB.seq.res = (DB.seq.res || 0) + 1;
   const p = ajustarPorDifrol(sol, sol.revisionJA);
   sol.resolucion = { numero: `${DB.seq.res}/${y}`, fecha: hoyISO(), tipo: p.tipo, supAprobada: p.supAprobada, supRechazada: p.supRechazada,
-    rodalesAprobados: p.rodalesAprobados, rodalesObjetados: p.rodalesObjetados, firmadaPor: USUARIO.id, vigenciaHasta: p.vigenciaHasta };
+    rodalesAprobados: p.rodalesAprobados, rodalesObjetados: p.rodalesObjetados, firmadaPor: USUARIO.id, subrogaA: USUARIO.subrogaA || null, vigenciaHasta: p.vigenciaHasta };
   sol.estado = 'resuelta';
   registrar(sol, `Resolución N° ${sol.resolucion.numero} firmada`, RESUELVE[p.tipo] + (p.porDifrol ? ' (por rechazo de la DIFROL)' : ''));
   guardar();

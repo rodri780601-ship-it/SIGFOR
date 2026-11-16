@@ -53,6 +53,15 @@ Todo se define en `css/tema-institucional.css`. La Aplicación web de plan de ma
 | Firma | Jefe provincial | Revisa el proyecto de resolución (aprueba, aprueba parcialmente o rechaza) y lo firma o lo devuelve. |
 | Notificación | Secretaría técnica | Registra la carta certificada (10 días hábiles, art. 6° D.S. 93). El plan aprobado queda en la ficha predial y en el registro público (art. 29 D.S. 93). |
 
+## Subrogancia
+
+El jefe analista, el jefe provincial y la secretaría técnica tienen en *Mi bandeja* el botón **Activar subrogancia**. Abre una ventana con los posibles subrogantes y un calendario para fijar el período. Los subrogantes posibles son los funcionarios de la misma oficina.
+
+- Durante el período, el subrogante ve en su bandeja **Actuar como … (S)** y obtiene el rol, la bandeja y los permisos del cargo. Todo lo que hace queda en el historial como «(S), subrogando a …», y la resolución firmada por un jefe provincial subrogante lo indica.
+- Al terminar el período pierde esos privilegios y vuelve a su perfil: al navegar, al volver a entrar o, a más tardar, en un minuto.
+- Mientras exista una subrogancia vigente o programada, el titular ve **Revocar subrogancia**. Si la revoca, el subrogante pierde los privilegios de inmediato. El titular conserva siempre su propio perfil.
+- Se guardan en `DB.subrogancias` (`js/subrogancia.js`). En los datos de demostración, `jefe.analista` subroga a `jefe.provincial` esta semana.
+
 ## Portal externo: propietarios y consultores
 
 Antes de la recepción, un plan puede nacer fuera de CONAF:

@@ -3,6 +3,7 @@
    ===================================================================== */
 function route() {
   limpiarMapas();
+  if (verificarSubrogancia()) pintarUsuario(); // terminó o se revocó: pierde los privilegios del subrogado
   const main = $('#main');
   main.onmouseover = main.onmouseleave = null; // la bandeja los fija para resaltar predios en su mapa
   const h = decodeURIComponent((location.hash || '#bandeja').slice(1)).split('/');
@@ -17,7 +18,7 @@ function route() {
       case 'normativa': vistaNormativa(main); break;
       case 'nueva': vistaNueva(main, a); break;
       case 'exp': vistaExpediente(main, a, b); break;
-      default: vistaBandeja(main);
+      default: vistaBandeja(main); insertarPanelSubrogancia(main);
     }
   } catch (e) {
     console.error(e);
@@ -29,7 +30,7 @@ function route() {
 function pintarUsuario() {
   if (!USUARIO) return;
   $('#user-nom').textContent = USUARIO.nombre;
-  $('#user-rol').textContent = `${ROLES[USUARIO.rol]} · ${USUARIO.oficina}`;
+  $('#user-rol').textContent = USUARIO.subrogaA ? `${rolSub(USUARIO.rol)} · subrogando a ${usuario(USUARIO.subrogaA).nombre}` : `${ROLES[USUARIO.rol]} · ${USUARIO.oficina}`;
   $$('.only-st').forEach(x => x.hidden = USUARIO.rol !== 'ST');
   $$('.only-int').forEach(x => x.hidden = esExterno());
 }
@@ -124,6 +125,7 @@ function bindEjemplos(L) {
 function entrar() {
   document.body.classList.remove('en-login');
   $('#login').hidden = true; $('.top-wrap').hidden = false; $('#main').hidden = false;
+  iniciarIdentidad();
   pintarUsuario();
   if (!location.hash || location.hash === '#login') location.hash = '#bandeja';
   route();

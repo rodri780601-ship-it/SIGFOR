@@ -92,6 +92,7 @@ function semillaExterna() {
 }
 /* Actualiza los datos ya guardados en el navegador sin perder los cambios del usuario */
 function migrarDatos() {
+  if (!DB.subrogancias) DB.subrogancias = [];
   if (DB.sinEjemplos) { DB.tickets = DB.tickets || []; DB.proyectos = DB.proyectos || []; return; } // el usuario borró los ejemplos: no se reponen
   PREDIOS_SEED.forEach((c, k) => { if (!predio(c.id)) DB.predios.push(predioSemilla(c, k)); });
   if (!DB.tickets) { semillaExterna(); guardar(); }
@@ -121,7 +122,7 @@ function borrarEjemplos() {
 /* Carga los ejemplos y conserva lo propio; si algún N° de lo propio coincide con uno de ejemplo, lo propio se renumera */
 function cargarEjemplos() {
   const pr = JSON.parse(JSON.stringify(datosPropios(DB)));
-  const seqAntes = { ...(DB.seq || {}) };
+  const seqAntes = { ...(DB.seq || {}) }, subs = DB.subrogancias || [];
   const db = generarSemilla(); // deja DB = db con los ejemplos
   const seq = (k, ids, patron) => Math.max(db.seq[k] || 0, seqAntes[k] || 0, ...ids.map(id => +(String(id).match(patron) || [0, 0])[1]));
   const renumerar = (lista, existentes, nuevoId) => {
@@ -143,6 +144,7 @@ function cargarEjemplos() {
   pr.solicitudes.forEach(x => { if (x.origenProyecto) x.origenProyecto.proyectoId = m(mPry, x.origenProyecto.proyectoId); });
   db.predios.push(...pr.predios); db.solicitudes.push(...pr.solicitudes); db.proyectos.push(...pr.proyectos); db.tickets.push(...pr.tickets);
   delete db.sinEjemplos;
+  db.subrogancias = subs; db.seq.sub = Math.max(db.seq.sub || 0, seqAntes.sub || 0); // las subrogancias no son datos de ejemplo: se conservan
   DB = db; guardar();
   return { renumeradas: Object.keys(mSol).length + Object.keys(mPry).length + Object.keys(mTk).length };
 }
@@ -286,5 +288,8 @@ function generarSemilla() {
   });
   db.seq.sol = solN;
   semillaExterna();
+  // Subrogancia de ejemplo: el jefe analista subroga al jefe provincial esta semana
+  db.subrogancias = [{ id: 'SUB-1', titularId: 'jp1', rol: 'JP', subroganteId: 'ja1', desde: sumarDias(hoy, -2), hasta: sumarDias(hoy, 5), creada: sumarDias(hoy, -3) + 'T09:00:00', revocada: null, revocadaPor: null }];
+  db.seq.sub = 1;
   return db;
 }
