@@ -104,6 +104,27 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--green2);outline-
 [data-kpi="vencen"],[data-k="vencen"]{--c:#e67700}
 [data-kpi="firmados"],[data-k="firmados"]{--c:#2b8a3e}
 [data-kpi="encurso"],[data-k="encurso"]{--c:#1c7ed6}
+/* Subrogancia */
+.sec-sub{--c:#0b7285;margin-bottom:16px}
+.sub-fila{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--line2)}
+.sub-fila:last-child{border-bottom:0}
+.sub-fila .row-btns{margin:0}
+.sub-activa{background:var(--info-t);border-radius:8px;padding:10px 12px;border-bottom:0}
+.sub-dlg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:16px}
+.sub-cands{border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin:0;max-height:340px;overflow:auto}
+.sub-cands legend{font-size:12px;font-weight:700;color:var(--muted);padding:0 4px}
+.cal-nav{display:flex;justify-content:space-between;align-items:center;margin:6px 0}
+.cal-nav b{text-transform:capitalize}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+.cal-h{font-size:11px;font-weight:700;color:var(--muted);padding:2px 0}
+.cal-d{font:inherit;font-size:12.5px;padding:6px 0;border:1px solid var(--line2);border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+.cal-d:hover:not(:disabled){border-color:var(--green2)}
+.cal-d.inhabil{color:var(--muted);background:var(--line2)}
+.cal-d.pasado{opacity:.35;cursor:not-allowed}
+.cal-d.hoy{font-weight:800;border-color:var(--ink)}
+.cal-d.rango{background:var(--green-t)}
+.cal-d.ini,.cal-d.fin{background:var(--green2);color:#fff;border-color:var(--green2);font-weight:700}
+@media (max-width:640px){.sub-dlg{grid-template-columns:1fr}}
 .sol-curso{margin-top:12px}
 .sol-curso-h{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
 .sol-curso .stepper{margin-bottom:0}
