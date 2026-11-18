@@ -1,12 +1,12 @@
 /* =====================================================================
-   SIGPM · Subrogancia de jefe analista, jefe provincial y secretaría técnica
+   SIGFOR · Subrogancia de jefe analista, jefe provincial y secretaría técnica
    El titular designa un subrogante y un período. Mientras está vigente, el
    subrogante puede «actuar como» el titular (rol y bandeja del cargo, marcado
    con «(S)»). Al terminar el período o si el titular la revoca, pierde esos
    privilegios de inmediato y vuelve a su propio perfil.
    ===================================================================== */
 const ROLES_SUBROGABLES = ['JA', 'JP', 'ST'];
-const SUBROGA_KEY = 'sigpm.subroga.v1';
+const SUBROGA_KEY = 'sigfor.subroga.v1';
 let USUARIO_BASE = null; // quien inició sesión; USUARIO es su identidad efectiva (propia o de subrogante)
 
 const subrogancias = () => DB.subrogancias || (DB.subrogancias = []);

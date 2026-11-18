@@ -9,7 +9,7 @@ const USER_KEY = 'sigfor.usuario.v1';
    en el navegador a las claves nuevas y elimina las antiguas. Se ejecuta antes de cargar(). */
 (function migrarClavesAntiguas() {
   try {
-    [['sig' + 'pm.datos.v1', STORE_KEY], ['sig' + 'pm.usuario.v1', USER_KEY]].forEach(([vieja, nueva]) => {
+    [['sig' + 'pm.datos.v1', STORE_KEY], ['sig' + 'pm.usuario.v1', USER_KEY], ['sig' + 'pm.subroga.v1', 'sigfor.subroga.v1']].forEach(([vieja, nueva]) => {
       const v = localStorage.getItem(vieja);
       if (v === null) return;
       if (localStorage.getItem(nueva) === null) localStorage.setItem(nueva, v);
