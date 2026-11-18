@@ -1,5 +1,5 @@
 /* =====================================================================
-   SIGPM · Portal externo: propietarios y consultores
+   SIGFOR · Portal externo: propietarios y consultores
    Propietario: ve sus fichas prediales, emite tickets y revisa proyectos.
    Consultor: canjea el código del ticket, ve la ficha y elabora el plan.
    ===================================================================== */

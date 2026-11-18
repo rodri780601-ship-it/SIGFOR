@@ -1,8 +1,8 @@
 /* =====================================================================
-   SIGPM · Plan de ejemplo para el consultor (datos FICTICIOS)
+   SIGFOR · Plan de ejemplo para el consultor (datos FICTICIOS)
    Arma un proyecto completo de la Aplicación web de plan de manejo a partir
    de la ficha predial. La propia aplicación calcula el inventario y la
-   revisión, igual que al usar «Enviar a SIGPM».
+   revisión, igual que al usar «Enviar a SIGFOR».
    ===================================================================== */
 const TF_EJEMPLO = {
   RRC: { app: 'Roble - Raulí - Coigüe', cod: 8, stf: 'Renoval y bosque puro secundario', sp: ['Nothofagus obliqua', 'Nothofagus alpina', 'Nothofagus dombeyi'] },
@@ -164,8 +164,8 @@ function llenarProyectoEjemplo(pry) {
     window.addEventListener('message', onMsg);
     fr.addEventListener('load', () => {
       const p = predio(pry.predioId);
-      fr.contentWindow.postMessage({ tipo: 'sigpm:inicio', solicitud: pry.id, soloLectura: false, proyecto, predio: { nombre: p.nombre } }, '*');
-      fr.contentWindow.postMessage({ tipo: 'sigpm:enviar' }, '*');
+      fr.contentWindow.postMessage({ tipo: 'sigfor:inicio', solicitud: pry.id, soloLectura: false, proyecto, predio: { nombre: p.nombre } }, '*');
+      fr.contentWindow.postMessage({ tipo: 'sigfor:enviar' }, '*');
     });
     document.body.appendChild(fr);
   });

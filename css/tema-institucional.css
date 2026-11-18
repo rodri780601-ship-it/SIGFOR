@@ -22,7 +22,7 @@
 }
 :root[data-theme="dark"]{ --inst-header-fondo:#ffffff; --inst-header-texto:#1d2420; --inst-verde-claro:#1d3227; --inst-azul-claro:#18283a; }
 
-/* ---------- SIGPM: tokens y tipografía ---------- */
+/* ---------- SIGFOR: tokens y tipografía ---------- */
 :root{
   --green: var(--inst-verde-osc); --green2: var(--inst-verde); --green-t: var(--inst-verde-claro);
   --info: var(--inst-azul); --hdr: 72px;

@@ -1,5 +1,5 @@
 /* =====================================================================
-   SIGPM · Núcleo geoespacial
+   SIGFOR · Núcleo geoespacial
    - Sistemas de referencia usados en Chile
    - Lectura de cartografía (shapefile .zip, GeoJSON, KML)
    - Análisis normativo espacial automático (Ley 20.283, D.S. 82)

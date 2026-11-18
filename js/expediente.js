@@ -1,5 +1,5 @@
 /* =====================================================================
-   SIGPM · Expediente de solicitud (flujo completo por rol)
+   SIGFOR · Expediente de solicitud (flujo completo por rol)
    ===================================================================== */
 const TABS = [
   ['resumen', 'Resumen'], ['ingreso', 'Ingreso y antecedentes'], ['formulario', 'Formulario PMFBN'], ['cartografia', 'Cartografía y análisis'],

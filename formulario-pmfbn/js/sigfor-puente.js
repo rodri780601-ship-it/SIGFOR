@@ -1,8 +1,8 @@
 /* ==========================================================================
-   Puente SIGPM ⇄ Aplicación web de plan de manejo (PMFBN)
-   Se activa solo cuando la aplicación se abre dentro de SIGPM (iframe).
-   - Recibe:  { tipo: 'sigpm:inicio', solicitud, proyecto, interesado, profesional, predio, cartografia, soloLectura }
-   - Recibe:  { tipo: 'sigpm:enviar' } para devolver el proyecto sin usar el botón (plan de ejemplo)
+   Puente SIGFOR ⇄ Aplicación web de plan de manejo (PMFBN)
+   Se activa solo cuando la aplicación se abre dentro de SIGFOR (iframe).
+   - Recibe:  { tipo: 'sigfor:inicio', solicitud, proyecto, interesado, profesional, predio, cartografia, soloLectura }
+   - Recibe:  { tipo: 'sigfor:enviar' } para devolver el proyecto sin usar el botón (plan de ejemplo)
    - Envía:   { tipo: 'pmfbn:datos', datos: { formato: 'pmfbn-app', proyecto, resumen, revision } }
    La aplicación original no se modifica; este archivo se agrega al final de index.html.
    ========================================================================== */
@@ -25,7 +25,7 @@
     App.save(); App.navRefresh(); App.go('sol');
   }
 
-  /* Proyecto nuevo prellenado con lo que la secretaría técnica ya registró en SIGPM */
+  /* Proyecto nuevo prellenado con lo que la secretaría técnica ya registró en SIGFOR */
   function prellenado(c) {
     const p = nuevoEstado();
     const i = c.interesado || {}, pr = c.predio || {}, au = c.profesional || {};
@@ -38,16 +38,16 @@
     if (pr.cbr) { p.f.pr_fojas = String(pr.cbr.fojas ?? ''); p.f.pr_num = String(pr.cbr.numero ?? ''); p.f.pr_anio = String(pr.cbr.anio ?? ''); p.f.pr_cbr = String(pr.cbr.conservador ?? ''); }
     p.f.au_nombre = au.nombre || ''; p.f.au_rut = sinDV(au.rut); p.f.au_prof = PROF[au.titulo] || '';
     p.opt.sol3 = i.tipo === 'juridica';
-    // Cartografía ya disponible en SIGPM (límite predial y área a intervenir)
+    // Cartografía ya disponible en SIGFOR (límite predial y área a intervenir)
     p.carto = { huso: '', layers: {}, plano: {} };
-    if (pr.geom) p.carto.layers.Limite_Predial = [{ id: uid(), g: pr.geom.geometry || pr.geom, p: { Nom_Predio: (pr.nombre || '').slice(0, 100), Rol: pr.rol || '', Comuna: pr.comuna || '', Fuente: 'SIGPM' } }];
-    if (c.cartografia && c.cartografia.features) p.carto.layers.Rodales = c.cartografia.features.map(f => ({ id: uid(), g: f.geometry, p: { N_Rodal: String(f.properties.rodal), Tipo_Bos: 'BN', Fuente: 'SIGPM' } }));
-    if (c.cursos && c.cursos.features) p.carto.layers.Hidrografia = c.cursos.features.map(f => ({ id: uid(), g: f.geometry, p: { Tip_Dren: '2', Tipo_Perma: f.properties.permanente ? '1' : '2', Fuente: 'SIGPM' } }));
+    if (pr.geom) p.carto.layers.Limite_Predial = [{ id: uid(), g: pr.geom.geometry || pr.geom, p: { Nom_Predio: (pr.nombre || '').slice(0, 100), Rol: pr.rol || '', Comuna: pr.comuna || '', Fuente: 'SIGFOR' } }];
+    if (c.cartografia && c.cartografia.features) p.carto.layers.Rodales = c.cartografia.features.map(f => ({ id: uid(), g: f.geometry, p: { N_Rodal: String(f.properties.rodal), Tipo_Bos: 'BN', Fuente: 'SIGFOR' } }));
+    if (c.cursos && c.cursos.features) p.carto.layers.Hidrografia = c.cursos.features.map(f => ({ id: uid(), g: f.geometry, p: { Tip_Dren: '2', Tipo_Perma: f.properties.permanente ? '1' : '2', Fuente: 'SIGFOR' } }));
     if (c.cartografia && c.cartografia.features) p.t.t511 = c.cartografia.features.map(f => ({ _id: uid(), rodal: String(f.properties.rodal) }));
     return p;
   }
 
-  /* Resumen calculado por la aplicación (inventario y revisión) que SIGPM usa para evaluar */
+  /* Resumen calculado por la aplicación (inventario y revisión) que SIGFOR usa para evaluar */
   function resumen() {
     const out = { rodales: {} };
     for (const rod of App.rodales()) {
@@ -66,16 +66,16 @@
   }
 
   function barra() {
-    if (document.getElementById('sigpm-bar')) return;
+    if (document.getElementById('sigfor-bar')) return;
     const bar = document.createElement('div');
-    bar.id = 'sigpm-bar';
-    document.body.classList.add('en-sigpm');
+    bar.id = 'sigfor-bar';
+    document.body.classList.add('en-sigfor');
     bar.style.cssText = 'position:fixed;inset:0 0 auto 0;height:40px;box-sizing:border-box;z-index:60;display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 16px;background:#2e6b39;color:#fff;font:13px "Segoe UI",system-ui,sans-serif';
-    bar.innerHTML = `<b>SIGPM</b><span id="sigpm-ctx" style="opacity:.85"></span><span style="flex:1"></span>` +
-      (ctx && ctx.soloLectura ? '<span style="background:#f2c14e;color:#3b2d00;border-radius:999px;padding:2px 10px;font-weight:700">Solo lectura: los cambios no se envían a SIGPM</span>'
-        : '<button id="sigpm-enviar" style="border:0;border-radius:7px;padding:7px 14px;background:#f2c14e;color:#3b2d00;font-weight:700;cursor:pointer">Enviar a SIGPM</button>');
+    bar.innerHTML = `<b>SIGFOR</b><span id="sigfor-ctx" style="opacity:.85"></span><span style="flex:1"></span>` +
+      (ctx && ctx.soloLectura ? '<span style="background:#f2c14e;color:#3b2d00;border-radius:999px;padding:2px 10px;font-weight:700">Solo lectura: los cambios no se envían a SIGFOR</span>'
+        : '<button id="sigfor-enviar" style="border:0;border-radius:7px;padding:7px 14px;background:#f2c14e;color:#3b2d00;font-weight:700;cursor:pointer">Enviar a SIGFOR</button>');
     document.body.insertBefore(bar, document.body.firstChild);
-    const b = document.getElementById('sigpm-enviar');
+    const b = document.getElementById('sigfor-enviar');
     if (b) b.addEventListener('click', enviar);
   }
 
@@ -88,12 +88,12 @@
 
   window.addEventListener('message', ev => {
     const d = ev.data;
-    if (d && d.tipo === 'sigpm:enviar' && ctx && !ctx.soloLectura) { enviar(); return; }
-    if (!d || d.tipo !== 'sigpm:inicio') return;
+    if (d && d.tipo === 'sigfor:enviar' && ctx && !ctx.soloLectura) { enviar(); return; }
+    if (!d || d.tipo !== 'sigfor:inicio') return;
     ctx = d;
     cargar(d.proyecto && d.proyecto.f ? d.proyecto : prellenado(d));
     barra();
-    document.getElementById('sigpm-ctx').textContent = `Solicitud ${d.solicitud} · ${d.predio && d.predio.nombre ? d.predio.nombre : ''}`;
+    document.getElementById('sigfor-ctx').textContent = `Solicitud ${d.solicitud} · ${d.predio && d.predio.nombre ? d.predio.nombre : ''}`;
     document.title = `PMFBN · ${d.solicitud}`;
   });
   window.parent.postMessage({ tipo: 'pmfbn:listo' }, '*');

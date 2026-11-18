@@ -1,5 +1,5 @@
 /* =====================================================================
-   SIGPM · Datos de demostración (FICTICIOS)
+   SIGFOR · Datos de demostración (FICTICIOS)
    Ningún predio, persona, RUT, resolución ni capa de referencia
    corresponde a la realidad. Las geometrías se generan con semilla fija.
    ===================================================================== */

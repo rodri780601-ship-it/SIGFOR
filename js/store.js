@@ -1,10 +1,22 @@
 /* =====================================================================
-   SIGPM · Almacenamiento (navegador) y flujo del procedimiento
+   SIGFOR · Almacenamiento (navegador) y flujo del procedimiento
    La capa de datos está aislada aquí para reemplazarla por una API
    (p. ej. REST + PostGIS) sin tocar las vistas.
    ===================================================================== */
-const STORE_KEY = 'sigpm.datos.v1';
-const USER_KEY = 'sigpm.usuario.v1';
+const STORE_KEY = 'sigfor.datos.v1';
+const USER_KEY = 'sigfor.usuario.v1';
+/* Migración desde el nombre anterior del sistema (SIGPM): copia los datos y la sesión guardados
+   en el navegador a las claves nuevas y elimina las antiguas. Se ejecuta antes de cargar(). */
+(function migrarClavesAntiguas() {
+  try {
+    [['sig' + 'pm.datos.v1', STORE_KEY], ['sig' + 'pm.usuario.v1', USER_KEY]].forEach(([vieja, nueva]) => {
+      const v = localStorage.getItem(vieja);
+      if (v === null) return;
+      if (localStorage.getItem(nueva) === null) localStorage.setItem(nueva, v);
+      localStorage.removeItem(vieja);
+    });
+  } catch (e) { /* almacenamiento bloqueado: se usan las claves nuevas */ }
+})();
 let DB = null;
 let USUARIO = null;
 

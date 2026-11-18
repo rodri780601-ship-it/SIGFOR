@@ -1,5 +1,5 @@
 /* =====================================================================
-   SIGPM · Lógica de evaluación (automática + borradores de informes)
+   SIGFOR · Lógica de evaluación (automática + borradores de informes)
    ===================================================================== */
 const ESTADO_CHECK = { cumple: 'Cumple', no_cumple: 'No cumple', observacion: 'Con observación', na: 'No aplica' };
 

@@ -1,27 +1,27 @@
 # Integración · Aplicación web de plan de manejo (PMFBN)
 
-Esta carpeta contiene la **Aplicación web de plan de manejo** (https://rodri780601-ship-it.github.io/Plan-de-manejo/) sin modificaciones. Solo se agrega `js/sigpm-puente.js` al final de `index.html`.
+Esta carpeta contiene la **Aplicación web de plan de manejo** (https://rodri780601-ship-it.github.io/Plan-de-manejo/) sin modificaciones. Solo se agrega `js/sigfor-puente.js` al final de `index.html`.
 
 ## Cómo funciona
 
-1. En SIGPM, la secretaría técnica abre *Formulario PMFBN → Completar en la Aplicación web de plan de manejo*. La aplicación se abre embebida (iframe, mismo origen).
-2. SIGPM envía `{ tipo: 'sigpm:inicio', solicitud, proyecto, interesado, profesional, predio, cartografia, cursos, soloLectura }`.
+1. En SIGFOR, la secretaría técnica abre *Formulario PMFBN → Completar en la Aplicación web de plan de manejo*. La aplicación se abre embebida (iframe, mismo origen).
+2. SIGFOR envía `{ tipo: 'sigfor:inicio', solicitud, proyecto, interesado, profesional, predio, cartografia, cursos, soloLectura }`.
    - Si la solicitud ya tiene un plan (`proyecto`), la aplicación lo abre tal cual.
    - Si no lo tiene, crea un proyecto nuevo prellenado con:
      - Interesado, representante legal, predio, rol, comuna e inscripción en el CBR.
      - Autor del plan.
      - Capas *Límite predial*, *Rodales a intervenir* e *Hidrografía* del capítulo 13, junto con los rodales del cuadro 5.1.1.
-3. En la aplicación aparece una barra verde con el botón **Enviar a SIGPM**, que devuelve `{ tipo: 'pmfbn:datos', datos: { formato: 'pmfbn-app', proyecto, resumen, revision, cartografia } }`:
+3. En la aplicación aparece una barra verde con el botón **Enviar a SIGFOR**, que devuelve `{ tipo: 'pmfbn:datos', datos: { formato: 'pmfbn-app', proyecto, resumen, revision, cartografia } }`:
    - `proyecto`: el estado completo de la aplicación (el mismo JSON de «Exportar proyecto»).
    - `resumen`: resultados del inventario por rodal (densidad, área basal, volumen, especies, estado de desarrollo), tipo de bosque y zonas de protección (7.4.1).
    - `revision`: los errores y advertencias de «Revisión y exportación».
-4. SIGPM guarda el proyecto en la solicitud y lo normaliza para la evaluación (`desdeAppPMFBN` en `js/pmfbn.js`). Analista, abogado y jefaturas lo consultan en modo de solo lectura.
+4. SIGFOR guarda el proyecto en la solicitud y lo normaliza para la evaluación (`desdeAppPMFBN` en `js/pmfbn.js`). Analista, abogado y jefaturas lo consultan en modo de solo lectura.
 
-También se puede importar en SIGPM el archivo `.json` que genera «Exportar proyecto» de la aplicación.
+También se puede importar en SIGFOR el archivo `.json` que genera «Exportar proyecto» de la aplicación.
 
-## Equivalencias principales (aplicación → SIGPM)
+## Equivalencias principales (aplicación → SIGFOR)
 
-| Aplicación | SIGPM |
+| Aplicación | SIGFOR |
 |---|---|
 | `t.sol_int[0]` (nombre, RUT sin DV, calidad, tipo PPF) | Interesado (RUT con DV, pequeño propietario) |
 | `f.rl_*` | Representante legal |
@@ -38,7 +38,7 @@ También se puede importar en SIGPM el archivo `.json` que genera «Exportar pro
 | `f.f14_fecha` + interesado/autor | Firmas |
 | `carto.layers.Rodales` (`N_Rodal`) | Cartografía del área a intervenir |
 | `carto.layers.Hidrografia` | Cursos de agua de la ficha predial (si no tiene) |
-| `carto.layers.Limite_Predial` | Límite de la ficha predial nueva, cuando el predio aún no existe en SIGPM |
+| `carto.layers.Limite_Predial` | Límite de la ficha predial nueva, cuando el predio aún no existe en SIGFOR |
 
 ## Ficha predial nueva desde el formulario
 
@@ -51,7 +51,7 @@ El JSON simplificado acepta los mismos datos en `predio`: `nombre`, `rol` (vario
 Copie la nueva versión del repositorio en esta carpeta. Luego vuelva a agregar la línea siguiente después de `js/app.js` en `index.html`:
 
 ```html
-<script src="js/sigpm-puente.js"></script>
+<script src="js/sigfor-puente.js"></script>
 ```
 
-El puente usa estos objetos globales de la aplicación: `S`, `nuevoEstado`, `App`, `Inv`, `Carto`, `CAPAS`, `CAT` y `uid`. Si cambian de nombre, ajuste `sigpm-puente.js`.
+El puente usa estos objetos globales de la aplicación: `S`, `nuevoEstado`, `App`, `Inv`, `Carto`, `CAPAS`, `CAT` y `uid`. Si cambian de nombre, ajuste `sigfor-puente.js`.

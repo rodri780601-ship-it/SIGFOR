@@ -1,5 +1,5 @@
 /* =====================================================================
-   SIGPM · Vistas generales: bandeja, mapa, ficha predial, registro, normativa
+   SIGFOR · Vistas generales: bandeja, mapa, ficha predial, registro, normativa
    ===================================================================== */
 const chipEstado = s => { const e = ESTADOS[s.estado]; return `<span class="chip ${e.color}">${esc(e.nombre)}</span>`; };
 function chipPlazo(s) {

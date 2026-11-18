@@ -1,5 +1,5 @@
 /* =====================================================================
-   SIGPM · Catálogo normativo
+   SIGFOR · Catálogo normativo
    Fuente: «Normativa Forestal», CONAF, edición digital enero 2026.
    Ley 20.283; D.S. 93/2008 (Reglamento General); D.S. 82/2010 (Reglamento
    de Suelos, Aguas y Humedales); Ley 19.880; D.L. 701 art. 5°.

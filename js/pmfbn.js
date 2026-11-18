@@ -1,5 +1,5 @@
 /* =====================================================================
-   SIGPM · Módulo del formulario PMFBN (Plan de Manejo Forestal de Bosque Nativo)
+   SIGFOR · Módulo del formulario PMFBN (Plan de Manejo Forestal de Bosque Nativo)
    ---------------------------------------------------------------------
    Este módulo es el punto de integración con el proyecto
    «Aplicación web de plan de manejo». Admite tres vías:
@@ -94,7 +94,7 @@ function predioDelFormulario(sol) {
 const predioPorRol = roles => DB.predios.find(q => roles.some(r => norm(r) === norm(q.rol))) || null;
 
 
-/* ---------- Proyecto de la «Aplicación web de plan de manejo» → esquema SIGPM ---------- */
+/* ---------- Proyecto de la «Aplicación web de plan de manejo» → esquema SIGFOR ---------- */
 const PEND_APP = { '< 30': 15, '≥ 30 ᴧ < 45': 37, '≥ 45 ᴧ < 60': 50, '≥ 60': 61 };
 const COB_APP = { '>10 ᴧ ≤20': 11, '>20 ᴧ ≤30': 21, '>30 ᴧ ≤40': 31, '>40 ᴧ ≤50': 41, '>50 ᴧ ≤60': 51, '>60': 61 };
 function metodoDesdeActividad(a) {
@@ -290,12 +290,12 @@ function soloPoligonosRodal(fc) {
 function abrirFormularioExterno(sol, onChange, soloLectura = false) {
   const bg = document.createElement('div'); bg.className = 'modal-bg';
   bg.innerHTML = `<div class="modal ext" role="dialog" aria-modal="true" aria-label="Aplicación web de plan de manejo">
-    <div class="ext-bar"><b>Aplicación web de plan de manejo</b><span class="muted small">${soloLectura ? 'Consulta del plan presentado (solo lectura).' : 'Complete el plan y use «Enviar a SIGPM» en la barra verde superior.'}</span><button class="btn sm ghost" id="ext-close">Cerrar</button></div>
+    <div class="ext-bar"><b>Aplicación web de plan de manejo</b><span class="muted small">${soloLectura ? 'Consulta del plan presentado (solo lectura).' : 'Complete el plan y use «Enviar a SIGFOR» en la barra verde superior.'}</span><button class="btn sm ghost" id="ext-close">Cerrar</button></div>
     <iframe src="formulario-pmfbn/index.html" title="Aplicación web de plan de manejo"></iframe></div>`;
   document.body.appendChild(bg);
   const iframe = $('iframe', bg);
   const p = predio(sol.predioId);
-  const ctx = () => JSON.parse(JSON.stringify({ tipo: 'sigpm:inicio', solicitud: sol.id, soloLectura, proyecto: sol.pmfbnProyecto || null, interesado: sol.interesado, profesional: sol.profesional,
+  const ctx = () => JSON.parse(JSON.stringify({ tipo: 'sigfor:inicio', solicitud: sol.id, soloLectura, proyecto: sol.pmfbnProyecto || null, interesado: sol.interesado, profesional: sol.profesional,
     predio: p ? { nombre: p.nombre, rol: p.rol, comuna: p.comuna, superficie: p.supSIG, cbr: p.cbr, geom: p.geom } : null,
     cartografia: sol.cartografia || null, cursos: p ? p.cursos : null }));
   iframe.addEventListener('load', () => { try { iframe.contentWindow.postMessage(ctx(), '*'); } catch (e) { /* */ } });

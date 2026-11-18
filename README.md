@@ -1,4 +1,4 @@
-# SIGPM · Sistema de Gestión de Planes de Manejo de Bosque Nativo
+# SIGFOR · Sistema de Gestión Forestal
 
 Maqueta funcional (HTML, CSS y JavaScript, sin servidor) para recepcionar, evaluar y resolver solicitudes de planes de manejo de corta de bosque nativo. Su base es geoespacial: cada solicitud cuelga de una **ficha predial** con su cartografía.
 
@@ -87,8 +87,8 @@ Para cada rodal del área a intervenir:
 
 La carpeta `formulario-pmfbn/` contiene la **Aplicación web de plan de manejo** (https://rodri780601-ship-it.github.io/Plan-de-manejo/). Funciona con todas sus capacidades: inventario, tabla de rodal, gráficos, cartografía del capítulo 13 y revisión.
 
-- La secretaría técnica la abre desde *Formulario PMFBN*. Llega prellenada con los datos ya registrados en SIGPM y con la cartografía del predio.
-- Al terminar, usa **Enviar a SIGPM**. SIGPM guarda el proyecto completo y extrae los datos que usan la pauta técnica y el análisis espacial.
+- La secretaría técnica la abre desde *Formulario PMFBN*. Llega prellenada con los datos ya registrados en SIGFOR y con la cartografía del predio.
+- Al terminar, usa **Enviar a SIGFOR**. SIGFOR guarda el proyecto completo y extrae los datos que usan la pauta técnica y el análisis espacial.
 - Analista, abogado y jefaturas ven el plan completo en modo de solo lectura.
 - También se puede importar el `.json` de «Exportar proyecto».
 
@@ -111,7 +111,7 @@ js/expediente.js    expediente con pestañas y acciones por rol
 js/portal.js        portal de propietarios y consultores: tickets y proyectos
 js/ejemplo.js       plan de ejemplo ficticio para el consultor
 js/app.js           navegación y arranque
-formulario-pmfbn/   Aplicación web de plan de manejo + js/sigpm-puente.js (integración)
+formulario-pmfbn/   Aplicación web de plan de manejo + js/sigfor-puente.js (integración)
                     js/vendor/: polygon-clipping 0.15.7 (MIT), para recortar polígonos al límite predial
 ejemplos/           archivos para probar la carga de un predio nuevo e importar un formulario
 ```
@@ -120,7 +120,7 @@ ejemplos/           archivos para probar la carga de un predio nuevo e importar 
 
 1. Como secretaría técnica, use **⬆ Subir solicitud (.json)** con `ejemplos/pmfbn_ejemplo_las_vertientes.json`, o abra **Nueva solicitud** e importe ese archivo en *Formulario PMFBN*. En *Ingreso y antecedentes*, la ficha predial nueva aparece completada con los datos del formulario: nombre, rol, comuna, precipitación, inscripción en el CBR y límite predial. Revísela y presione «Crear ficha predial». Si el formulario no trae el límite, adjunte `ejemplos/nuevo_predio_limite_WGS84.geojson`.
 2. En *Cartografía y análisis*, cargue `ejemplos/nuevo_predio_rodales_UTM18S.geojson`. Está en UTM 18S y el sistema la reproyecta. Agregue también `nuevo_predio_cursos_agua_WGS84.geojson`.
-3. En *Formulario PMFBN*, abra la Aplicación web de plan de manejo, complete el plan y presione «Enviar a SIGPM». También puede importar `ejemplos/pmfbn_ejemplo_las_vertientes.json`, que viene en formato simplificado.
+3. En *Formulario PMFBN*, abra la Aplicación web de plan de manejo, complete el plan y presione «Enviar a SIGFOR». También puede importar `ejemplos/pmfbn_ejemplo_las_vertientes.json`, que viene en formato simplificado.
 
 ## Para pasar a producción
 

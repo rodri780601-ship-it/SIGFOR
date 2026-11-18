@@ -1,5 +1,5 @@
 /* =====================================================================
-   SIGPM · Arranque, navegación y selector de usuario
+   SIGFOR · Arranque, navegación y selector de usuario
    ===================================================================== */
 function route() {
   limpiarMapas();
@@ -47,14 +47,14 @@ function mostrarLogin(msg) {
   const L = $('#login'); L.hidden = false;
   const fila = u => `<button type="button" class="demo-acc" data-u="${esc(u.usuario)}"><b>${esc(u.nombre)}</b><code>${esc(u.usuario)}</code></button>`;
   L.innerHTML = `
-    <header class="lg-head">${logoHTML()}<div class="lg-sistema"><b>SIGPM</b><span>Planes de Manejo de Bosque Nativo · Ley N° 20.283</span></div></header>
+    <header class="lg-head">${logoHTML()}<div class="lg-sistema"><b>SIGFOR</b><span>Sistema de Gestión Forestal · Planes de manejo de bosque nativo, Ley N° 20.283</span></div></header>
     <div class="franja-inst" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="lg-maqueta" role="note"><b>Maqueta de demostración.</b> No es un servicio oficial en funcionamiento: las cuentas, los predios y las solicitudes son ficticios.</div>
     <div class="lg-main">
       <section class="lg-carrusel" aria-label="Bosques nativos de Chile">${PORTADA.map(([src, alt], i) => `<figure class="lg-slide ${i ? '' : 'activo'}" style="background-image:url('${src}')" role="img" aria-label="${esc(alt)}"></figure>`).join('')}</section>
       <section class="lg-card lg-ingreso" aria-labelledby="login-t">
         <h1 id="login-t">Ingreso de usuarios</h1>
-        <p class="muted small">Sistema de Gestión de Planes de Manejo de Bosque Nativo</p>
+        <p class="muted small">Sistema de Gestión Forestal</p>
         <form id="login-form" autocomplete="off" novalidate>
           <label for="lg-u">Usuario</label><input id="lg-u" name="usuario" autocomplete="username" required>
           <label for="lg-c">Contraseña</label><input id="lg-c" name="clave" type="password" autocomplete="current-password" required>
@@ -74,7 +74,7 @@ function mostrarLogin(msg) {
       <div><img src="img/logo-conaf-gobierno-gris.png" alt="Ministerio de Agricultura, Gobierno de Chile · CONAF"><b>Servicios en Línea</b></div>
       <div><b>Consultas</b><p>Para consultas de carácter general, reclamos o sugerencias, contáctese con la Oficina de Informaciones, Reclamos y Sugerencias (OIRS) de CONAF en <a href="https://oirs.conaf.cl" target="_blank" rel="noopener">oirs.conaf.cl</a>.</p></div>
       <div><b>Corporación Nacional Forestal · CONAF</b><p>Paseo Bulnes 259, Depto. 406<br>Santiago, Chile<br><a href="https://www.conaf.cl" target="_blank" rel="noopener">www.conaf.cl</a></p></div>
-    </div><div class="lg-pie-legal">SIGPM · Planes de Manejo de Bosque Nativo — maqueta de demostración</div></footer>`;
+    </div><div class="lg-pie-legal">SIGFOR · Sistema de Gestión Forestal — maqueta de demostración</div></footer>`;
   clearInterval(carruselTimer);
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     let k = 0; const sl = $$('.lg-slide', L);
@@ -149,7 +149,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const ok = await modal({ titulo: 'Restablecer datos de demostración', html: '<p>Se borrarán las solicitudes y cambios guardados en este navegador y se cargarán los datos ficticios iniciales.</p>', botones: [{ txt: 'Cancelar' }, { txt: 'Restablecer', valor: true, cls: 'danger' }] });
     if (ok) { reiniciarDatos(); pintarUsuario(); location.hash = '#bandeja'; route(); toast('Datos restablecidos', 'ok'); }
   });
-  $('#btn-export').addEventListener('click', () => descargar(`sigpm_respaldo_${hoyISO()}.json`, JSON.stringify(DB), 'application/json'));
+  $('#btn-export').addEventListener('click', () => descargar(`sigfor_respaldo_${hoyISO()}.json`, JSON.stringify(DB), 'application/json'));
   window.addEventListener('hashchange', () => { if (!USUARIO) return; route(); pintarUsuario(); });
   const g = usuarioGuardado();
   if (g && usuario(g).rol) { setUsuario(g); entrar(); } else mostrarLogin();
